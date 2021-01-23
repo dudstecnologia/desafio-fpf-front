@@ -7,6 +7,16 @@ Sistema para gerenciar cadastros de projetos
 npm install
 ```
 
+## Criar o arquivo de variáveis baseado no modelo
+```
+cp config.js.example config.js
+```
+
+## Alterar a URL Base no arquivo config.js de acordo com o seu ambiente
+```
+API_URL: 'http://x.x.x.x/api'
+```
+
 ### Iniciar a aplicação em modo de desenvolvimento (Ideal para testar)
 ```
 npm run serve

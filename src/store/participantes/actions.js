@@ -1,7 +1,7 @@
-import axios from 'axios'
+import http from '../../service/http'
 
 export function getParticipantesApi (context) {
-    axios.get('http://fpf.eduardo/api/participantes')
+    http.get('/participantes')
         .then(({ data }) => {
             context.commit('setParticipantes', data)
         })
