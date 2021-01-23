@@ -3,5 +3,16 @@
 </template>
 
 <script>
-export default {}
+import { mapActions } from 'vuex'
+
+export default {
+  mounted () {
+    this.getParticipantesApi()
+  },
+  methods: {
+    ...mapActions('participantes', [
+      'getParticipantesApi'
+    ])
+  }
+}
 </script>
