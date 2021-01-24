@@ -6,11 +6,11 @@
       </b-form-group>
 
       <div class="row">
-        <b-form-group class="col-md-3" label="Data de Início">
+        <b-form-group class="col-md-2" label="Data de Início">
           <b-form-input v-mask="'##/##/####'" v-model="form.data_inicio" required></b-form-input>
         </b-form-group>
 
-        <b-form-group class="col-md-3" label="Data de Término">
+        <b-form-group class="col-md-2" label="Data de Término">
           <b-form-input v-mask="'##/##/####'" v-model="form.data_termino" required></b-form-input>
         </b-form-group>
 
@@ -18,8 +18,12 @@
           <b-form-input type="number" v-model="form.valor" required></b-form-input>
         </b-form-group>
 
-        <b-form-group class="col-md-3" label="Risco">
+        <b-form-group class="col-md-2" label="Risco">
           <b-form-select v-model="form.risco" :options="riscos" required></b-form-select>
+        </b-form-group>
+
+        <b-form-group class="col-md-2" label="Retorno (%)">
+          <b-form-input type="number" v-model="retornoInvestimento" readonly></b-form-input>
         </b-form-group>
       </div>
 
@@ -34,8 +38,8 @@
       </b-form-group>
 
       <div class="text-right">
-        <b-button class="mr-2" variant="success">Simular</b-button>
-        <b-button type="submit" variant="primary">Salvar</b-button>
+        <simulador-investimento :valor="form.valor" :risco="form.risco" @atualizar-retorno="atualizarRetorno" />
+        <b-button class="ml-2" type="submit" variant="primary" :disabled="!formValido">Salvar</b-button>
       </div>
     </b-form>
   </div>
@@ -43,6 +47,7 @@
 
 <script>
 import GerenciarParticipantes from '../components/GerenciarParticipantes'
+import SimuladorInvestimento from '../components/SimuladorInvestimento'
 import { mapActions, mapGetters } from 'vuex'
 import Validate from '../mixins/Validate'
 import vSelect from 'vue-select'
@@ -51,6 +56,7 @@ import 'vue-select/dist/vue-select.css'
 export default {
   components: {
     GerenciarParticipantes,
+    SimuladorInvestimento,
     vSelect
   },
   mixins: [
@@ -58,6 +64,7 @@ export default {
   ],
   data () {
     return {
+      retornoInvestimento: 0,
       form: {
         nome: '',
         data_inicio: '',
@@ -80,6 +87,9 @@ export default {
     ...mapActions('participantes', [
       'getParticipantesApi'
     ]),
+    atualizarRetorno (v) {
+      this.retornoInvestimento = v
+    },
     onSubmit () {
       if (!this.validarFormProjeto()) {
         return

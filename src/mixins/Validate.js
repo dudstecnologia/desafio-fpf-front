@@ -1,8 +1,20 @@
 export default {
   methods: {
     validarFormProjeto () {
+      if (!this.formValido) {
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Ops!',
+          text: 'Todos os campos são obrigatórios'
+        })
+      }
+
+      return this.formValido
+    }
+  },
+  computed: {
+    formValido () {
       let valido = true
-      let msg = ''
 
       Object.keys(this.form).forEach((key) => {
         let type = typeof this.form[key]
@@ -13,23 +25,13 @@ export default {
 
           if (number <= 0 || number === '') {
             valido = false
-            msg = 'Informe um valor válido'
           }
         }
 
         if (type === 'string' && value === '' || type === 'object' && value.length <= 0) {
           valido = false
-          msg = 'Todos os campos são obrigatórios'
         }
       })
-
-      if (!valido) {
-        this.$swal.fire({
-          icon: 'error',
-          title: 'Ops!',
-          html: msg
-        })
-      }
 
       return valido
     }
