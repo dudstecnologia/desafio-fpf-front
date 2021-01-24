@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueRouter from 'vue-router'
 import { BootstrapVue } from 'bootstrap-vue'
@@ -18,13 +17,12 @@ Vue.use(Vuex)
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 Vue.use(VueSweetalert2)
-Vue.use(VueAxios, axios)
+Vue.use(VueAxios, http)
 
 Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
-  http,
   render: h => h(App),
 }).$mount('#app')
