@@ -37,11 +37,12 @@ export default {
     onSubmit () {
       this.$http.post('/participantes', this.form)
         .then(({ data }) => {
+          this.form.nome = ''
           this.addParticipante(data)
-          this.form = ''
+          this.$swal.fire('Perfeito', 'Salvo com sucesso', 'success')
         })
         .catch(() => {
-
+          this.$swal.fire('Ops!', 'Ocorreu um erro ao salvar', 'error')
         })
     }
   }
