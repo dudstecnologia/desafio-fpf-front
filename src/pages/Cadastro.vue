@@ -116,7 +116,11 @@ export default {
         return
       }
 
-      this.$http.post('/projetos', this.form)
+      this.$http({
+          method: this.$route.params.id ? 'PUT' : 'POST',
+          url: this.$route.params.id ? `/projetos/${this.$route.params.id}` : '/projetos',
+          data: this.form
+        })
         .then(() => {
           this.$swal.fire('Perfeito!', 'Salvo com sucesso', 'success')
 
