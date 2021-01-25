@@ -71,7 +71,7 @@ export default {
         data_termino: '',
         valor: '',
         risco: 0,
-        participantes: []
+        participantes: [],
       },
       riscos: [
         { value: 0, text: 'Baixo' },
@@ -94,8 +94,16 @@ export default {
       if (!this.validarFormProjeto()) {
         return
       }
-      
-      console.log('Passou')
+
+      this.$http.post('/projetos', this.form)
+        .then(() => {
+          this.$swal.fire('Perfeito!', 'Salvo com sucesso', 'success')
+
+          this.$router.push('/')
+        })
+        .catch(() => {
+          this.$swal.fire('Ops!', 'Ocorreu um erro ao salvar', 'error')
+        })
     }
   },
   computed: {

@@ -19,8 +19,7 @@ export default {
   data () {
     return {
       modalState: false,
-      investimento: '',
-      resultado: 0
+      investimento: ''
     }
   },
   methods: {
@@ -50,7 +49,6 @@ export default {
       if (validate) {
         this.$emit('atualizar-retorno', Math.trunc(retornoInvestimento))
 
-        this.investimento = ''
         this.modalState = false
       }
     }
