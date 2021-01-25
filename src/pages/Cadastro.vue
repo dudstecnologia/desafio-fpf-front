@@ -82,6 +82,10 @@ export default {
   },
   mounted () {
     this.getParticipantesApi()
+
+    if (this.$route.params.id) {
+      this.getDadosProjeto()
+    }
   },
   methods: {
     ...mapActions('participantes', [
@@ -89,6 +93,23 @@ export default {
     ]),
     atualizarRetorno (v) {
       this.retornoInvestimento = v
+    },
+    getDadosProjeto () {
+      this.$http.get(`/projetos/${this.$route.params.id}`)
+        .then(({ data }) => {
+          this.$set(this.form, 'nome', data.projeto.nome);
+          this.$set(this.form, 'data_inicio', data.projeto.data_inicio);
+          this.$set(this.form, 'data_termino', data.projeto.data_termino);
+          this.$set(this.form, 'valor', data.projeto.valor.toString());
+          this.$set(this.form, 'risco', data.projeto.risco);
+
+          data.participantes.forEach((p) => {
+            this.form.participantes.push(p.id)
+          })
+        })
+        .catch(() => {
+          this.$swal.fire('Ops!', 'Ocorreu um erro ao buscar os dados do projeto', 'error')
+        })
     },
     onSubmit () {
       if (!this.validarFormProjeto()) {
